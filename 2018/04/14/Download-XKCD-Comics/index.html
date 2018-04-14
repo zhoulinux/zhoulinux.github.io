@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="Try to solve all kinds of fascinating problems and learn from it.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Will Zhou&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="I have been learning Automate the Boring Stuff with Python for about a month. Today I master an interesting material, getting comics from a website. That is exciting for me, since I can do something u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Download XKCD Comics">
+<meta property="og:url" content="http://yoursite.com/2018/04/14/Download-XKCD-Comics/index.html">
 <meta property="og:site_name" content="Will Zhou&#39;s Blog">
-<meta property="og:description" content="Try to solve all kinds of fascinating problems and learn from it.">
+<meta property="og:description" content="I have been learning Automate the Boring Stuff with Python for about a month. Today I master an interesting material, getting comics from a website. That is exciting for me, since I can do something u">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-04-14T09:20:43.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Will Zhou&#39;s Blog">
-<meta name="twitter:description" content="Try to solve all kinds of fascinating problems and learn from it.">
+<meta name="twitter:title" content="Download XKCD Comics">
+<meta name="twitter:description" content="I have been learning Automate the Boring Stuff with Python for about a month. Today I master an interesting material, getting comics from a website. That is exciting for me, since I can do something u">
 
 
 
@@ -118,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/14/Download-XKCD-Comics/"/>
 
 
 
 
 
-  <title>Will Zhou's Blog</title>
+  <title>Download XKCD Comics | Will Zhou's Blog</title>
   
 
 
@@ -143,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,9 +227,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -259,9 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/14/Download-XKCD-Comics/" itemprop="url">Download XKCD Comics</a></h1>
+          <h1 class="post-title" itemprop="name headline">Download XKCD Comics</h1>
         
 
         <div class="post-meta">
@@ -311,14 +309,10 @@
       
 
       
-        
-          
-            <p>I have been learning <a href="https://automatetheboringstuff.com/" target="_blank" rel="noopener">Automate the Boring Stuff with Python</a> for about a month. Today I master an interesting material, getting comics from a website. That is exciting for me, since I can do something useful eventually. Let’s jump to the code:</p>
+        <p>I have been learning <a href="https://automatetheboringstuff.com/" target="_blank" rel="noopener">Automate the Boring Stuff with Python</a> for about a month. Today I master an interesting material, getting comics from a website. That is exciting for me, since I can do something useful eventually. Let’s jump to the code:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># downloadXkcd.py - Downloads every single XKCD comic.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests, bs4, os, logging, traceback</span><br><span class="line">logging.basicConfig(filename=<span class="string">'downloadXkcdLog.txt'</span>, level=logging.INFO, format=<span class="string">'%(asctime)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Start.'</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    url = <span class="string">'http://xkcd.com'</span>             <span class="comment"># starting url</span></span><br><span class="line">    os.makedirs(<span class="string">'xkcd'</span>, exist_ok=<span class="keyword">True</span>)  <span class="comment"># store comics in ./xkcd</span></span><br><span class="line"></span><br><span class="line">    names = []</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(<span class="string">'xkcd'</span>):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            path = os.path.join(root, file)</span><br><span class="line">            names.append(path)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> url.endswith(<span class="string">'#'</span>):</span><br><span class="line">        <span class="comment"># Download the page</span></span><br><span class="line">        print(<span class="string">'Downloading page %s...'</span> % url)</span><br><span class="line">        logging.info(<span class="string">'Downloading page %s...'</span> % url)</span><br><span class="line">        res = requests.get(url)</span><br><span class="line">        res.raise_for_status()</span><br><span class="line">        soup = bs4.BeautifulSoup(res.text)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Find the URL of the comic image.</span></span><br><span class="line">        comicElem = soup.select(<span class="string">'#comic img'</span>)</span><br><span class="line">        <span class="keyword">if</span> comicElem == []:</span><br><span class="line">            print(<span class="string">'Could not find comic image.'</span>)</span><br><span class="line">            logging.warning(<span class="string">'Could not find comic image.'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            comicUrl = <span class="string">'http:'</span> + comicElem[<span class="number">0</span>].get(<span class="string">'src'</span>)</span><br><span class="line">            <span class="comment"># Check if the image file already exists.</span></span><br><span class="line">            imagePath = os.path.join(<span class="string">'./xkcd'</span>, os.path.basename(comicUrl))</span><br><span class="line">            <span class="keyword">if</span> imagePath <span class="keyword">in</span> names:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># Download the image.</span></span><br><span class="line">            print(<span class="string">'Downloading image %s...'</span> % (comicUrl))</span><br><span class="line">            logging.info(<span class="string">'Downloading image %s...'</span> % (comicUrl))</span><br><span class="line">            res = requests.get(comicUrl)</span><br><span class="line">            res.raise_for_status()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Save the image to ./xkcd.</span></span><br><span class="line">            imageFile = open(imagePath, <span class="string">'wb'</span>)</span><br><span class="line">            <span class="keyword">for</span> chunk <span class="keyword">in</span> res.iter_content(<span class="number">100000</span>):</span><br><span class="line">                imageFile.write(chunk)</span><br><span class="line">            imageFile.close()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Get the prev button's url.</span></span><br><span class="line">        prevLink = soup.select(<span class="string">'a[rel="prev"]'</span>)[<span class="number">0</span>]</span><br><span class="line">        url = <span class="string">'http://xkcd.com'</span> + prevLink.get(<span class="string">'href'</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    errorFile = open(<span class="string">'errorInfo.txt'</span>, <span class="string">'w'</span>)</span><br><span class="line">    errorFile.write(traceback.format_exc())</span><br><span class="line">    errorFile.close()</span><br><span class="line">print(<span class="string">'Done.'</span>)</span><br></pre></td></tr></table></figure>
 <p>Next, I am gonna to download cartoons Peppa Pig for my daughter.</p>
 
-          
-        
       
     </div>
     
@@ -335,140 +329,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Will Zhou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Will Zhou's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/02/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T08:25:18+08:00">
-                2018-04-02
-              </time>
+              <a href="/2018/04/02/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -478,10 +360,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -489,6 +372,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -685,6 +572,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
