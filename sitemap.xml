@@ -2,7 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://example.com/</loc>
-         <lastmod>2021-07-23</lastmod>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/belief/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/families/families/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/investments/investments/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/knowledge/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/mac/mac_development/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/mac/mac_usage/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/python/python_notes/</loc>
+         <lastmod>2021-08-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/python/python_resource/</loc>
+         <lastmod>2021-08-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

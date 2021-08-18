@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <script>
+	// Hack for scrolling window when linking to anchor tag with fixed nav header
+        var shiftWindow = function() { scrollBy(0, -75) };
+        window.addEventListener("hashchange", shiftWindow);
+        function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://example.com/knowledge/python/python_notes/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>在Mac上安装Python的经过 - Learn by Solving</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/http.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/base.js"></script> 
+    </head>
+
+    <body class="">
+
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+	<div class="container">
+	<a class="navbar-brand" href="../../..">Learn by Solving</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse">
+          <!-- Main navigation -->
+          <nav class="nav">
+            <ul class="navbar-nav">
+              <li >
+                <a class="nav-link" href="../../..">主页</a>
+              </li>
+              <li >
+                <a class="nav-link" href="../../../belief/belief/">信仰</a>
+              </li>
+              <li >
+                <a class="nav-link" href="../../../families/families/">家人</a>
+              </li>
+              <li >
+                <a class="nav-link" href="../../knowledge/">知识</a>
+              </li>
+              <li >
+                <a class="nav-link" href="../../../investments/investments/">投资</a>
+              </li>
+            </ul>
+          </nav>
+
+          <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+		<i class="fa fa-search"></i> Search
+              </a>
+            </li>
+          </ul>
+	</div>
+	</div>
+      </nav><div id="content" class="container">
+        
+      <div class="row">
+        <div class="col-md-9" role="main">
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    
+    <li class="breadcrumb-item active" aria-current="page">在Mac上安装Python的经过</li>
+  </ol>
+</nav>
+
+
+<h1 id="macpython">在Mac上安装Python的经过</h1>
+<p>在Mac上面，我安装了Homebrew，Anaconda和Xcode。我通过Homebrew手动安装了Python3。Anaconda默认会安装Python3，而Xcode则会默认安装Python2和Python3。</p>
+<p>在一开始，它们给我带来了很多困扰，不知道自己现在用的是哪个版本的Python。我安装Xcode，是为了解决安装其他软件的依赖性，一般不会使用它。通过Homebrew安装的Python3，只能在命令行使用，学习成本较高。所以在刚开始学习Python的时候，我就依赖于Anaconda了。这样我不用考虑那些安装细节，只专注在Python和编程本身。</p>
+<p>我用Anaconda熟悉了Python的语法，并且完成了一些小的脚本之后，就准备做一些稍微复杂的项目。这个时候，我就想搞明白如何来管理Python的包和虚拟环境。因此就开始研究这些细节。</p>
+<p>为了简化研究的复杂度，我先卸载了通过Homebrew安装的Python。这样，系统内只剩下Xcode和Anaconda安装的Python了。</p>
+<pre><code class="language-bash">where python
+
+/usr/bin/python
+/usr/local/anaconda3/bin/python
+</code></pre>
+<pre><code class="language-bash">where python3
+
+/usr/bin/python3
+/usr/local/anaconda3/bin/python3
+</code></pre>
+<p>这样我就知道了，上面的路径是Xcode的安装路径，下边的则是Anaconda的安装路径。</p>
+<p>随后，我再通过Homebrew安装了Python。</p>
+<pre><code class="language-bash">brew install python
+</code></pre>
+<p>安装完毕之后，我将<code>/usr/local/bin</code>放在<code>/usr/bin</code>之前。但是发现系统首选的Python还是Xcode安装的版本。</p>
+<pre><code class="language-python">python
+
+WARNING: Python 2.7 is not recommended.
+This version is included in macOS for compatibility with legacy software.
+Future versions of macOS will not include Python 2.7.
+Instead, it is recommended that you transition to using 'python3' from within Terminal.
+
+Python 2.7.16 (default, Jun 18 2021, 03:23:53)
+[GCC Apple LLVM 12.0.5 (clang-1205.0.19.59.6) [+internal-os, ptrauth-isa=deploy on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre>
+<p>而执行<code>python3</code>时使用的则是Homebrew安装的版本。</p>
+<pre><code class="language-bash">python3
+
+Python 3.9.6 (default, Jun 29 2021, 05:25:02)
+[Clang 12.0.5 (clang-1205.0.22.9)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre>
+<p>这就让我疑惑了。我查询了<code>/usr/local/bin</code>，发现下面并没有<code>python</code>的可执行文件或链接文件。</p>
+<pre><code class="language-bash">ls -al /usr/local/bin/python*
+
+lrwxr-xr-x  1 zhoulinux  admin  38 Aug 12 08:18 /usr/local/bin/python3 -&gt; ../Cellar/python@3.9/3.9.6/bin/python3
+lrwxr-xr-x  1 zhoulinux  admin  45 Aug 12 08:18 /usr/local/bin/python3-config -&gt; ../Cellar/python@3.9/3.9.6/bin/python3-config
+lrwxr-xr-x  1 zhoulinux  admin  40 Aug 12 08:18 /usr/local/bin/python3.9 -&gt; ../Cellar/python@3.9/3.9.6/bin/python3.9
+lrwxr-xr-x  1 zhoulinux  admin  47 Aug 12 08:18 /usr/local/bin/python3.9-config -&gt; ../Cellar/python@3.9/3.9.6/bin/python3.9-config
+</code></pre>
+<p>我推测可能是Homebrew将链接文件放在了其他文件夹。重新读取了Homebrew中的Python信息后，我的推测得到了印证。</p>
+<pre><code class="language-bash">brew info python
+
+Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
+`python3`, `python3-config`, `pip3` etc., respectively, have been installed into
+  /usr/local/opt/python@3.9/libexec/bin
+</code></pre>
+<p>如果我简单地把上面的路径添加到环境变量文件中，那么之后Python升级之后就还要继续修改。我推测Homebrew会提前避免这样的问题，所以就查看了<code>/usr/local/opt</code>下面的内容。</p>
+<pre><code class="language-bash">ls -al /usr/local/opt/python*
+
+lrwxr-xr-x  1 zhoulinux  admin  26 Aug 12 08:18 /usr/local/opt/python -&gt; ../Cellar/python@3.9/3.9.6
+lrwxr-xr-x  1 zhoulinux  admin  26 Aug 12 08:18 /usr/local/opt/python3 -&gt; ../Cellar/python@3.9/3.9.6
+lrwxr-xr-x  1 zhoulinux  admin  26 Aug 12 08:18 /usr/local/opt/python@3 -&gt; ../Cellar/python@3.9/3.9.6
+lrwxr-xr-x  1 zhoulinux  admin  26 Aug 12 08:18 /usr/local/opt/python@3.9 -&gt; ../Cellar/python@3.9/3.9.6
+</code></pre>
+<p>我继续查询了<code>/usr/local/opt/python</code>下面的内容，发现了另一个链接文件。</p>
+<pre><code class="language-bash">ls -al /usr/local/opt/python/libexec/bin
+
+total 0
+drwxr-xr-x  8 zhoulinux  admin  256 Aug 12 08:18 .
+drwxr-xr-x  4 zhoulinux  admin  128 Jun 28 16:57 ..
+lrwxr-xr-x  1 zhoulinux  admin   58 Jun 28 16:57 idle -&gt; ../../Frameworks/Python.framework/Versions/3.9/bin/idle3.9
+lrwxr-xr-x  1 zhoulinux  admin   14 Aug 12 08:18 pip -&gt; ../../bin/pip3
+lrwxr-xr-x  1 zhoulinux  admin   59 Jun 28 16:57 pydoc -&gt; ../../Frameworks/Python.framework/Versions/3.9/bin/pydoc3.9
+lrwxr-xr-x  1 zhoulinux  admin   60 Jun 28 16:57 python -&gt; ../../Frameworks/Python.framework/Versions/3.9/bin/python3.9
+lrwxr-xr-x  1 zhoulinux  admin   67 Jun 28 16:57 python-config -&gt; ../../Frameworks/Python.framework/Versions/3.9/bin/python3.9-config
+lrwxr-xr-x  1 zhoulinux  admin   16 Aug 12 08:18 wheel -&gt; ../../bin/wheel3
+</code></pre>
+<p>这里不仅有<code>python</code>的链接，还有<code>pip</code>的链接。那就是<code>/usr/local/opt/python/libexec/bin</code>这个文件夹了，把它加入到环境变量中就可以了。</p>
+<pre><code class="language-python">python
+
+Python 3.9.6 (default, Jun 29 2021, 05:25:02)
+[Clang 12.0.5 (clang-1205.0.22.9)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre>
+<p>之后升级Python也不用再修改环境变量了。</p>
+<p><strong>参考链接</strong></p>
+<p><a href="https://docs.python-guide.org/starting/install3/osx/">Installing Python 3 on Mac OS X</a></p>
+<h1 id="macpython_1">在Mac上管理Python虚拟环境</h1>
+<p>初学的时候，我建议使用Anaconda。它预置的包和图形化界面，能够降低学习成本，让我将注意力放在Python和编程上面，而不是安装包管理细节上面。有了一定经验之后，我建议开始使用其它命令行工具，帮助自己来了解包管理细节。</p>
+<p>Anacona将所有的文件都存放在<code>/usr/local/bin/anaconda3</code>下面，其中的<code>envs</code>下面就是创建的各个虚拟环境。</p>
+<pre><code class="language-bash">ls -al /usr/local/anaconda3
+
+total 56
+drwxr-xr-x    29 zhoulinux  staff    928 Aug 12 09:23 .
+drwxr-xr-x    20 root       wheel    640 Jul 22 18:17 ..
+drwxr-xr-x     3 zhoulinux  staff     96 Jul 23 17:50 Anaconda-Navigator.app
+-rw-r--r--     1 zhoulinux  staff  10588 May 13 23:22 LICENSE.txt
+drwxr-xr-x   476 zhoulinux  staff  15232 Aug 11 12:44 bin
+drwxr-xr-x   362 zhoulinux  staff  11584 Aug 11 12:44 conda-meta
+drwxr-xr-x     3 zhoulinux  staff     96 Jul 23 17:50 condabin
+drwxr-xr-x     3 zhoulinux  staff     96 Jul  4 16:30 doc
+drwxr-xr-x     3 zhoulinux  staff     96 Aug 12 09:25 envs
+drwxr-xr-x     6 zhoulinux  staff    192 Jul  4 16:30 etc
+drwxr-xr-x   344 zhoulinux  staff  11008 Aug 11 12:44 include
+drwxr-xr-x   744 zhoulinux  staff  23808 Aug 11 12:44 lib
+drwxr-xr-x     5 zhoulinux  staff    160 Jul  4 16:30 libexec
+drwxr-xr-x     3 zhoulinux  staff     96 Jul  4 16:30 licensing
+drwxr-xr-x     3 zhoulinux  staff     96 Jul  4 16:30 man
+drwxr-xr-x    68 zhoulinux  staff   2176 Jul  4 16:30 mkspecs
+-rw-rw-r--     1 zhoulinux  staff    743 Jul  4 16:30 org.freedesktop.dbus-session.plist
+drwxr-xr-x    15 zhoulinux  staff    480 Jul  4 16:30 phrasebooks
+drwxr-xr-x  1119 zhoulinux  staff  35808 Aug 12 09:25 pkgs
+drwxr-xr-x    25 zhoulinux  staff    800 Jul  4 16:30 plugins
+-rw-rw-r--     2 zhoulinux  staff  11518 Jul  4 05:41 pyodbc.pyi
+drwxr-xr-x     3 zhoulinux  staff     96 Jul  4 16:30 python.app
+drwxr-xr-x    27 zhoulinux  staff    864 Jul  4 16:30 qml
+drwxr-xr-x     7 zhoulinux  staff    224 Jul  4 16:30 resources
+drwxr-xr-x    14 zhoulinux  staff    448 Aug 11 12:44 sbin
+drwxr-xr-x    26 zhoulinux  staff    832 Jul  4 16:30 share
+drwxr-xr-x     3 zhoulinux  staff     96 Jul  4 16:30 shell
+drwxr-xr-x     9 zhoulinux  staff    288 Jul 23 18:01 ssl
+drwxr-xr-x   290 zhoulinux  staff   9280 Jul  4 16:30 translations
+</code></pre>
+<p>我最开始使用<a href="https://pipenv.kennethreitz.org/">Pipenv</a>来管理虚拟环境。第一步是在用户空间内安装它。安装完毕后有提示，要求把用户空间路径添加到环境变量中。</p>
+<pre><code class="language-bash">pip install --user pipenv
+
+WARNING: The script virtualenv-clone is installed in '/Users/zhoulinux/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script virtualenv is installed in '/Users/zhoulinux/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts pipenv and pipenv-resolver are installed in '/Users/zhoulinux/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed backports.entry-points-selectable-1.1.0 certifi-2021.5.30 distlib-0.3.2 filelock-3.0.12 pipenv-2021.5.29 platformdirs-2.2.0 six-1.16.0 virtualenv-20.7.2 virtualenv-clone-0.5.6
+</code></pre>
+<p>想确认上述提示中的路径是否为用户空间路径，可以用以下命令来验证。</p>
+<pre><code class="language-bash">python -m site
+
+sys.path = [
+    '/Users/zhoulinux',
+    '/usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/lib/python39.zip',
+    '/usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/lib/python3.9',
+    '/usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/lib/python3.9/lib-dynload',
+    '/Users/zhoulinux/Library/Python/3.9/lib/python/site-packages',
+    '/usr/local/lib/python3.9/site-packages',
+    '/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages',
+]
+USER_BASE: '/Users/zhoulinux/Library/Python/3.9' (exists)
+USER_SITE: '/Users/zhoulinux/Library/Python/3.9/lib/python/site-packages' (exists)
+ENABLE_USER_SITE: True
+</code></pre>
+<p>也可以使用额外参数来查看user base和user site目录。</p>
+<pre><code class="language-bash">pip -m site --user-base
+
+/Users/zhoulinux/Library/Python/3.9
+</code></pre>
+<pre><code class="language-bash">pip -m site --user-site
+
+/Users/zhoulinux/Library/Python/3.9/lib/python/site-packages
+</code></pre>
+<p>我们还可以使用下述命令来查看只在用户空间内安装的包。</p>
+<pre><code class="language-bash">pip list --user
+
+Package                           Version
+--------------------------------- ---------
+backports.entry-points-selectable 1.1.0
+certifi                           2021.5.30
+distlib                           0.3.2
+filelock                          3.0.12
+pipenv                            2021.5.29
+platformdirs                      2.2.0
+six                               1.16.0
+virtualenv                        20.7.2
+virtualenv-clone                  0.5.6
+</code></pre>
+<p>这里要注意一个小坑。我摘录了下来：</p>
+<blockquote>
+<p><strong>Virtualenv mapping caveat</strong></p>
+<ul>
+<li>Pipenv automatically maps projects to their specific virtualenvs.</li>
+<li>The virtualenv is stored globally with the name of the project’s  root directory plus the hash of the full path to the project’s root  (e.g., <code>my_project-a3de50</code>).</li>
+<li>If you change your project’s path, you break such a default mapping  and pipenv will no longer be able to find and to use the project’s  virtualenv.</li>
+<li>You might want to set <code>export PIPENV_VENV_IN_PROJECT=1</code> in your .bashrc/.zshrc (or any shell configuration file) for creating  the virtualenv inside your project’s directory, avoiding problems with  subsequent path changes.</li>
+</ul>
+</blockquote>
+<p>我按照上面的方法做了，因为我可能会更改项目文档的存放路径。</p>
+<p>做完上面的准备工作后，我建了一个测试项目文件夹来试验。</p>
+<pre><code class="language-bash">cd Downloads/test_env
+
+pipenv install requests
+
+Creating a virtualenv for this project...
+Pipfile: /Users/zhoulinux/Downloads/test_env/Pipfile
+Using /usr/local/bin/python3 (3.9.6) to create virtualenv...
+⠴ Creating virtual environment...created virtual environment CPython3.9.6.final.0-64 in 2797ms
+  creator CPython3Posix(dest=/Users/zhoulinux/Downloads/test_env/.venv, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/Users/zhoulinux/Library/Application Support/virtualenv)
+    added seed packages: pip==21.1.3, setuptools==57.0.0, wheel==0.36.2
+  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator
+
+✔ Successfully created virtual environment!
+Virtualenv location: /Users/zhoulinux/Downloads/test_env/.venv
+Creating a Pipfile for this project...
+Installing requests...
+Adding requests to Pipfile's [packages]...
+✔ Installation Succeeded
+Pipfile.lock not found, creating...
+Locking [dev-packages] dependencies...
+Locking [packages] dependencies...
+Building requirements...
+Resolving dependencies...
+✔ Success!
+Updated Pipfile.lock (fe5a22)!
+Installing dependencies from Pipfile.lock (fe5a22)...
+  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 0/0 — 00:00:00
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+</code></pre>
+<p>接着试验刚刚安装的包<code>requests</code>。</p>
+<pre><code class="language-bash">pipenv shell
+Launching subshell in virtual environment...
+ . /Users/zhoulinux/Downloads/test_env/.venv/bin/activate
+➜  test_env  . /Users/zhoulinux/Downloads/test_env/.venv/bin/activate
+
+python
+Python 3.9.6 (default, Jun 29 2021, 05:25:02)
+[Clang 12.0.5 (clang-1205.0.22.9)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import requests
+&gt;&gt;&gt; response = requests.get('https://httpbin.org/ip')
+&gt;&gt;&gt; print('Your IP is {0}'.format(response.json()['origin']))
+Your IP is 123.53.102.0
+</code></pre>
+<p>不仅是包，我还试验了The Eric Python IDE。</p>
+<pre><code class="language-bash">python -m pip install --upgrade pip
+python -m pip install eric-ide
+eric6_post_install
+
+eric6
+</code></pre>
+<p>可能是我对Eric还不熟悉，感觉不太好，觉得没有Spyder和VS Code好用一些。</p>
+<p><strong>参考链接</strong></p>
+<p><a href="https://docs.python-guide.org/dev/virtualenvs/">Pipenv &amp; Virtual Environment</a></p>
+<p><a href="https://pipenv.pypa.io/en/latest/install/#make-sure-you-ve-got-python-pip">Pipenv &amp; Virtual Environments</a></p>
+<p><a href="https://eric-ide.python-projects.org/eric-download.html">eric Download and Installation</a></p>
+<h1 id="ipython">在IPython中重新加载模块</h1>
+<p>我之前记得能够通过<code>reload</code>来重新加载模块，但是试过之后却提示错误。</p>
+<pre><code class="language-python">reload(decorators)
+
+NameError: name 'reload' is not defined
+</code></pre>
+<p>搜索之后，发现还需要先导入<code>reload</code>才可以。</p>
+<pre><code class="language-python">from importlib import reload
+</code></pre>
+<p>这个时候再运行<code>reload</code>就没有问题了。</p>
+<h1 id="strrepr">str()与repr()的区别</h1>
+<p>两个函数都能够输出字符串，粗看之下并无区别，如下面的例子。</p>
+<pre><code class="language-python">print(str('Hello World!'))
+Hello World!
+print(repr('Hello World!'))
+'Hello World!'
+print(str(2.0 / 11.0))
+0.18181818181818182
+print(repr(2.0 / 11.0))
+0.18181818181818182
+</code></pre>
+<p>除了打印字符串有引号的区别，看不出来有啥不同。</p>
+<p>换一个例子，就能够看出它们的区别来。</p>
+<pre><code class="language-python">print(str(today))
+2021-08-13 21:23:12.463664
+print(repr(today))
+datetime.datetime(2021, 8, 13, 21, 23, 12, 463664)
+</code></pre>
+<p><code>str()</code>的输出很容易阅读，即便是用户也能看明白。而<code>repr()</code>的输出则没有那么直观，但是能够告诉编程人员关于对象的信息，如上述例子中的类型和属性。</p>
+<p>它们的区别主要是：</p>
+<ul>
+<li><code>str()</code>是为了可读性设计的，<code>repr()</code>是为了明确性设计的。前者方便用户阅读，后者用于开发和调试。</li>
+<li><code>str()</code>的信息是用于打印，<code>repr()</code>提供了对象的详细信息。</li>
+<li><code>str()</code>调用的是对象的<code>__str_</code>函数，<code>repr()</code>调用的是对象的<code>__repr__</code>函数。如果要修改自定义类的输出，直接修改自定义类的<code>__str_</code>和<code>__repr__</code>函数即可。</li>
+</ul>
+<p><strong>参考链接</strong></p>
+<p><a href="https://www.geeksforgeeks.org/str-vs-repr-in-python/">str() vs repr() in Python</a></p>
+<h1 id="ipython_1">在虚拟环境中使用IPython</h1>
+<p>我启用了虚拟环境后，在其中安装了IPython，但是运行的时候却发现，执行的并非是虚拟环境的，还是之前Anaconda中的。系统也会给出警告信息。</p>
+<pre><code class="language-bash">ipython
+
+/usr/local/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py:937: UserWarning: Attempting to work in a virtualenv. If you encounter problems, please install IPython inside the virtualenv.
+  warn(&quot;Attempting to work in a virtualenv. If you encounter problems, please &quot;
+Python 3.8.11 (default, Aug  6 2021, 08:56:27)
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.26.0 -- An enhanced Interactive Python. Type '?' for help.
+</code></pre>
+<p>搜索之下，我才知道，这与Bash的缓存有关。之前我已经执行过其它版本的IPython。因此，如果想要执行虚拟环境内的版本，需要先清除缓存。也有文章讲直接重新打开Bash也可以，不过我没有在自己使用的Zsh上面验证过。如果要清除所有的Bash缓存，执行：</p>
+<pre><code class="language-bash">hash -r
+</code></pre>
+<p>如果只是清除其中某一个命令，执行：</p>
+<pre><code class="language-bash">hash -d ipython
+</code></pre>
+<p>我们也可以使用<code>type</code>命令来查看可执行程序的完整路径。</p>
+<pre><code class="language-bash">type ipython
+
+ipython is /Users/zhoulinux/Test_Py/.venv/bin/ipython
+</code></pre>
+<p>在网络上，我还看到另外一个解决方案，但是我没有明白是如何解决的。先记录下来吧。</p>
+<pre><code class="language-bash">alias ipy=&quot;python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'&quot;
+</code></pre>
+<p>IPython在虚拟环境中安装完毕后，只能够在命令行中使用。相比而言，我更喜欢使用Jupyter QtConsole。</p>
+<pre><code class="language-bash">pip install qtconsole
+# Make sure that Qt is installed. Unfortunately, Qt is not installed when using pip.
+pip install pyqt5
+</code></pre>
+<h1 id="python">Python与网络安全</h1>
+<p>它有网络安全方面有什么用途吗？如果有的话，我倒是有兴趣尝试一下，顺便搞清楚整个网络是怎么运转的。</p>
+<h1 id="python_1">Python与树莓派</h1>
+<p>搞的一些小玩意儿，让孩子也喜欢上编程和动手。</p>
+
+<ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
+  <li class="last-updated-holder displayDate loading">
+    <span class="last-updated-text">Last updated:</span>
+    <time role="presentation" datetime="2018-10-25T00:00:00.000Z" data-article-date-source="ms.date"></time>
+  </li>
+<!--
+  <li class="readingTime">
+    2 minutes to read
+  </li>
+-->
+  <li class="contributors-holder">
+    <span class="contributors-text">Contributors</span>
+    <ul class="contributors" data-bi-name="contributors"></ul>
+  </li>
+</ul>
+</div>
+        <div class="col-md-3"><div class="navbar-light navbar-expand-md hidden-print sticky-top sticky-offset" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    <div id="toc-collapse" class="navbar-collapse collapse card">
+        <ul class="nav flex-column bs-sidenav">
+            <li class="nav-item main"><a class="nav-link" href="#macpython">在Mac上安装Python的经过</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#macpython_1">在Mac上管理Python虚拟环境</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#ipython">在IPython中重新加载模块</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#strrepr">str()与repr()的区别</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#ipython_1">在虚拟环境中使用IPython</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#python">Python与网络安全</a></li>
+            <li class="nav-item main"><a class="nav-link" href="#python_1">Python与树莓派</a></li>
+        </ul>
+    </div>
+</div></div>
+      </div>
+      </div>
+
+      <footer class="col-md-12">
+	<hr>
+	<div class="container">
+	</div>
+      </footer>
+      <script>
+	var base_url = "../../..",
+            shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+      </script>
+      <script src="../../../js/base.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="h4 modal-title">Keyboard Shortcuts</p>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
