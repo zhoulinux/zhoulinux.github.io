@@ -2,47 +2,132 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://example.com/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/belief/belief/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E4%BB%A5%E5%BC%97%E6%89%80%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E5%8A%A0%E6%8B%89%E5%A4%AA%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E5%93%A5%E6%9E%97%E5%A4%9A%E5%89%8D%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E5%93%A5%E6%9E%97%E5%A4%9A%E5%90%8E%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E5%B8%96%E6%92%92%E7%BD%97%E5%B0%BC%E8%BF%A6%E5%89%8D%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E6%AD%8C%E7%BD%97%E8%A5%BF%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E7%BD%97%E9%A9%AC%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_notes/%E8%85%93%E7%AB%8B%E6%AF%94%E4%B9%A6%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_writings/bible_resources/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_writings/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%BF%A1%E8%80%B6%E7%A8%A3/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/belief/bible_writings/%E6%96%B0%E8%AF%91%E6%9C%AC%E7%9A%84%E6%97%B6%E9%97%B4%E8%A1%A8%E8%BF%B0%E9%97%AE%E9%A2%98/</loc>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/families/families/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/investments/investments/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/investments/%E4%BC%81%E4%B8%9A%E7%A0%94%E7%A9%B6%E7%AC%94%E8%AE%B0/%E5%88%86%E4%BC%97%E7%A0%94%E7%A9%B6%E7%AC%94%E8%AE%B0/</loc>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/knowledge/knowledge/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/english/self_introduction/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/english/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%9D%90%E6%96%99/</loc>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/knowledge/mac/mac_development/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/knowledge/mac/mac_usage/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/others/%E9%98%85%E8%AF%BB%E7%9A%84%E5%8A%9F%E7%94%A8/</loc>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/knowledge/python/python_notes/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/knowledge/python/python_resource/</loc>
-         <lastmod>2021-08-18</lastmod>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/work/%E5%90%88%E6%A0%BC%E7%9A%84%E7%9F%A5%E8%AF%86%E5%B7%A5%E4%BD%9C%E8%80%85/</loc>
+         <lastmod>2021-11-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/knowledge/work/%E6%A2%A6%E6%83%B3%E5%B7%A5%E4%BD%9C%E6%A0%87%E5%87%86/</loc>
+         <lastmod>2021-11-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
