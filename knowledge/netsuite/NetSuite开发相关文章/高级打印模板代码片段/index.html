@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://example.com/knowledge/netsuite/NetSuite%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0/%E9%AB%98%E7%BA%A7%E6%89%93%E5%8D%B0%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+    
+    <title>高级打印模板代码片段 - Learn by Solving</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../../css/base.min.css" rel="stylesheet">
+    <link href="../../../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../../../..">Learn by Solving</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../../..">主页</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../belief/belief/">信仰</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../families/families/">家人</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../knowledge/">知识</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../investments/investments/">投资</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#_1">在表格中显示图片</a></li>
+        <li class="first-level "><a href="#_2">汇总计算明细行的数量和金额</a></li>
+        <li class="first-level "><a href="#_3">在表格标题行上换行</a></li>
+        <li class="first-level "><a href="#_4">格式化数字显示</a></li>
+        <li class="first-level "><a href="#_5">根据一列对明细行排序</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>高级打印模板中使用的是<a href="https://freemarker.apache.org/">FreeMarker</a>这个模板引擎。我不熟悉它的语法，遇到一些复杂的模板时，需要查询帮助文档。为了方便后续使用，我把经常使用的一些代码片段保留下来。</p>
+<h1 id="_1">在表格中显示图片</h1>
+<p>显示货品明细行中货品资料上的图片语法如下。</p>
+<pre><code class="language-xml">&lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; colspan=&quot;2&quot;&gt;&lt;#if item.item.custitem_picture?has_content&gt;&lt;img src=&quot;${item.item.custitem_picture@url}&quot; style=&quot;height: 20mm; width:20mm&quot; /&gt;&lt;/#if&gt;&lt;/td&gt;
+</code></pre>
+<p>这里需要判断货品资料上的图片字段是否为空，不为空才能够显示。否则会报错。</p>
+<p>如果是单据主体上的图片字段，则不需要判断。我暂时记不起来是什么原因了。</p>
+<pre><code class="language-xml">&lt;td align=&quot;center&quot; colspan=&quot;2&quot;&gt;&lt;img src=&quot;${record.custbody_printing_picture@url}&quot; style=&quot;height: 20mm; width:20mm&quot; /&gt;&lt;/td&gt;
+</code></pre>
+<h1 id="_2">汇总计算明细行的数量和金额</h1>
+<pre><code class="language-xml">&lt;#if record.item?has_content&gt;
+      &lt;!-- 货品明细表格 --&gt;
+&lt;table style=&quot;width: 100%; margin-top: 10px;&quot;&gt;&lt;!-- start items --&gt;&lt;#assign total_qty=0&gt;&lt;#list record.item as item&gt;&lt;#if item_index==0&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;2&quot;&gt;规格编码&lt;/th&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;3&quot;&gt;中文名称&lt;/th&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;2&quot;&gt;条形码&lt;/th&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;1&quot;&gt;数量&lt;/th&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;1&quot;&gt;材料&lt;/th&gt;
+    &lt;th align=&quot;center&quot; colspan=&quot;2&quot;&gt;图片&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/#if&gt;&lt;tr&gt;
+    &lt;td align=&quot;left&quot; vertical-align=&quot;middle&quot; colspan=&quot;2&quot;&gt;${item.item}&lt;/td&gt;
+    &lt;td align=&quot;left&quot; vertical-align=&quot;middle&quot; colspan=&quot;3&quot;&gt;${item.item.custitem_chinese_displayname}&lt;/td&gt;
+    &lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; colspan=&quot;2&quot;&gt;${item.item.custitem_f3_upc_number_master_carton}&lt;/td&gt;
+    &lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; colspan=&quot;1&quot;&gt;${item.quantity}&lt;/td&gt;&lt;#assign total_qty+=item.quantity&gt;
+    &lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; colspan=&quot;1&quot;&gt;${item.item.custitem_material}&lt;/td&gt;
+    &lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; colspan=&quot;2&quot;&gt;&lt;#if item.item.custitem_picture?has_content&gt;&lt;img src=&quot;${item.item.custitem_picture@url}&quot; style=&quot;height: 20mm; width:20mm&quot; /&gt;&lt;/#if&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/#list&gt;&lt;!-- end items --&gt;&lt;/table&gt;
+&lt;hr style=&quot;width: 100%; color: #d3d3d3; background-color: #d3d3d3; height: 1px;&quot; /&gt;&lt;/#if&gt;
+</code></pre>
+<h1 id="_3">在表格标题行上换行</h1>
+<pre><code class="language-xml">&lt;th align=&quot;center&quot; vettical-align=&quot;middle&quot; rowspan=&quot;2&quot; colspan=&quot;1&quot;&gt;&lt;span&gt;毛重&lt;br/&gt;G.W.&lt;br/&gt;(KG)&lt;/span&gt;&lt;/th&gt;
+</code></pre>
+<h1 id="_4">格式化数字显示</h1>
+<pre><code class="language-xml">&lt;td align=&quot;right&quot; vettical-align=&quot;middle&quot; colspan=&quot;1&quot;&gt;${total_volume?string[&quot;0.##&quot;]}&lt;/td&gt;
+</code></pre>
+<h1 id="_5">根据一列对明细行排序</h1>
+<pre><code class="language-xml">&lt;#list record.item?sort_by(&quot;custcol_item_type&quot;) as item&gt;
+</code></pre></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../../../.."</script>
+    
+    <script src="../../../../js/base.js"></script>
+    <script src="../../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

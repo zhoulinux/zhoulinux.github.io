@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://example.com/knowledge/netsuite/NetSuite%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0/%E8%B4%A7%E5%93%81%E6%94%B6%E6%8D%AE%E4%BF%9D%E5%AD%98%E5%89%8D%E6%A3%80%E6%9F%A5%E5%BA%93%E4%BD%8D%E4%BF%A1%E6%81%AF/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+    
+    <title>货品收据保存前检查库位信息 - Learn by Solving</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../../css/base.min.css" rel="stylesheet">
+    <link href="../../../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../../../..">Learn by Solving</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../../..">主页</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../belief/belief/">信仰</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../families/families/">家人</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../knowledge/">知识</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../investments/investments/">投资</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#_1">参考资料</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>如果货品和仓库同时启用了库位，在货品收据上没有录入库位信息的情况下是可以正常保存的。但是在出库的时候，系统就会提示库存不足。为了规避这个问题，我们通过脚本，在保存货品收据前检查库位信息。如果没有填写，不允许用户保存单据。</p>
+<pre><code class="language-javascript">/**
+ * @NApiVersion 2.x
+ * @NScriptType ClientScript
+ * @NModuleScope SameAccount
+ */
+define(['N/currentRecord', 'N/search', 'N/ui/dialog'],
+    /**
+     * @param{currentRecord} currentRecord
+     * @param{dialog} dialog
+     */
+    function(currentRecord, search, dialog) {
+       /**
+         * Validation function to be executed when record is saved.
+         *
+         * @param {Object} scriptContext
+         * @param {Record} scriptContext.currentRecord - Current form record
+         * @returns {boolean} Return true if record is valid
+         *
+         * @since 2015.2
+         */
+        function saveRecord(scriptContext) {
+            // Call the function, to check the bin info before save the record.
+            return checkBinBeforeSave(scriptContext);
+        }
+        return {
+            saveRecord: saveRecord
+        };
+
+        function checkBinBeforeSave(scriptContext) {
+            var objCurrentRecord = scriptContext.currentRecord;
+
+            var subsidiary = objCurrentRecord.getValue({
+                fieldId: 'subsidiary'
+            });
+            // only execute to check bin in specific subsidiary (North Star (Xiamen) Technology Co., Ltd. CNY), whose internal id is 5.
+            if ('5' !== subsidiary) {
+                return true;
+            }
+
+            var message = '';
+            var numLines = objCurrentRecord.getLineCount({
+                sublistId: 'item'
+            });
+
+            // loop the item lines, checking if bins are filled.
+            for (var i = 0; i &lt; numLines; i++) {
+                var itemReceive = objCurrentRecord.getSublistValue({
+                    sublistId: 'item',
+                    fieldId: 'itemreceive',
+                    line: i,
+                });
+                // if the item line is not checked, pass.
+                if (!itemReceive) {
+                    continue;
+                }
+
+                var itemId = objCurrentRecord.getSublistText({
+                    sublistId: 'item',
+                    fieldId: 'itemkey',
+                    line: i,
+                });
+                var itemName = objCurrentRecord.getSublistText({
+                    sublistId: 'item',
+                    fieldId: 'itemname',
+                    line: i,
+                });
+                var locationId = objCurrentRecord.getSublistValue({
+                    sublistId: 'item',
+                    fieldId: 'location',
+                    line: i,
+                });
+                var itemData = search.lookupFields({
+                    type: search.Type.ITEM,
+                    id: itemId,
+                    columns: ['usebins']
+                });
+                var locationData = search.lookupFields({
+                    type: search.Type.LOCATION,
+                    id: locationId,
+                    columns: ['usesbins']
+                });
+                if (!(itemData.usebins &amp;&amp; locationData.usesbins)) {
+                    continue; // if bin is not required, no need to check.
+                }
+
+                var objInventoryDetailRecord = objCurrentRecord.getCurrentSublistSubrecord({
+                    sublistId: 'item',
+                    fieldId: 'inventorydetail',
+                });
+                var numInventoryDetailLines = objInventoryDetailRecord.getLineCount({
+                    sublistId: 'inventoryassignment'
+                });
+                if (!numInventoryDetailLines) {
+                    dialog.alert({
+                        title: '完善库位',
+                        message: '&lt;div style=&quot;color:green;&quot;&gt;&lt;b&gt;请检查货品明细行，完善其中的库位信息。&lt;br&gt;不能打开库存详细信息弹出窗口时，请刷新页面后再填写库位。&lt;/b&gt;&lt;/div&gt;'
+                    });
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    });
+</code></pre>
+<p><strong>查询货品信息的小坑</strong></p>
+<pre><code class="language-javascript">var itemId = objCurrentRecord.getSublistText({
+                    sublistId: 'item',
+                    fieldId: 'item',
+                    line: i,
+                });
+var itemId = objCurrentRecord.getSublistText({
+                    sublistId: 'item',
+                    fieldId: 'itemkey',
+                    line: i,
+                });
+</code></pre>
+<p>我以为字段标识是<code>item</code>，谁知道运行的时候报错，查询之后发现不是。看来，以后还是要多看数据字典，而不是在界面上查询。</p>
+<p><strong>查询库位的小坑</strong></p>
+<pre><code class="language-javascript">var itemData = search.lookupFields({
+                    type: search.Type.ITEM,
+                    id: itemId,
+                    columns: ['usebins']
+                });
+var locationData = search.lookupFields({
+                    type: search.Type.LOCATION,
+                    id: locationId,
+                    columns: ['usesbins']
+                });
+</code></pre>
+<p>在界面上查看货品和仓库的【启用库位】字段，显示的字段标识是一样的。我就相当然地把它们写为一样的，但是脚本在执行的时候提示找不到<code>usebins</code>。我仔细查看了数据字典，发现仓库与货品中使用的字段标识是不一样的。此外，在使用<code>search</code>查询字段时，要查询数据字典子页签<code>Search Column</code>的字段标识，而不是<code>Fields</code>子页签下的字段标识。</p>
+<p><strong>脚本正式部署之后不生效了</strong></p>
+<p>脚本部署在测试状态下，是不需要设置哪些角色和用户可以使用的，因为它只对脚本拥有人生效。</p>
+<p>而在正式部署之后，则需要设置哪些角色和用户可以使用，否则不会对任何角色或用户生效。我就是被这样的小问题搞的没脾气了，只好求助于开发同事。</p>
+<p><strong>与Auto Lot Numbering的冲突</strong></p>
+<p>我在一个安装有Auto Lot Numbering的环境中测试时，还发现与上述脚本有冲突。具体报错信息我没有记录，不过可以从报错信息中看到，是这个SuiteAPP导致的报错。我把它卸载之后，脚本就能够正常运行了。</p>
+<h2 id="_1">参考资料</h2>
+<p><a href="https://stoic.software/effective-suitescript/7-field-lookups-in-ss2/">7 FIELD LOOKUPS IN SUITESCRIPT 2.0</a></p>
+<p><a href="https://riptutorial.com/netsuite/example/28151/-2-0--lookup-single-field">[2.0] Lookup Single Field</a></p></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../../../.."</script>
+    
+    <script src="../../../../js/base.js"></script>
+    <script src="../../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

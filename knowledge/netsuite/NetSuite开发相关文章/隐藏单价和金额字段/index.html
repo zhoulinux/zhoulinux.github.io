@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://example.com/knowledge/netsuite/NetSuite%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0/%E9%9A%90%E8%97%8F%E5%8D%95%E4%BB%B7%E5%92%8C%E9%87%91%E9%A2%9D%E5%AD%97%E6%AE%B5/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+    
+    <title>隐藏单价和金额字段 - Learn by Solving</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../../css/base.min.css" rel="stylesheet">
+    <link href="../../../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../../../..">Learn by Solving</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../../..">主页</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../belief/belief/">信仰</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../families/families/">家人</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../knowledge/">知识</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../investments/investments/">投资</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#_1">通行做法</a></li>
+        <li class="first-level "><a href="#recordform">Record和Form对象</a></li>
+        <li class="first-level "><a href="#_2">查询数据字典中不存在的内部标识</a></li>
+        <li class="first-level "><a href="#_3">新建时报错</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>针对某些查看销售订单的用户，不能对他们开放单价和金额这些字段。</p>
+<h1 id="_1">通行做法</h1>
+<p>通常的做法是针对这些用户的角色，限定其使用的表格。在表格上面，隐藏指定的字段。但是明细行的金额和毛额字段无法在表格上隐藏。</p>
+<p>此时，我们可以使用工作流来隐藏明细行的金额字段。</p>
+<p>或者，我们可以使用脚本来隐藏字段。</p>
+<pre><code class="language-js">/**
+ * @NApiVersion 2.1
+ * @NScriptType UserEventScript
+ */
+define(['N/record', 'N/search', 'N/ui/serverWidget'],
+    /**
+     * @param{file} file
+     * @param{record} record
+     */
+    (record, search, serverWidget) =&gt; {
+        /**
+         * Defines the function definition that is executed before record is loaded.
+         * @param {Object} scriptContext
+         * @param {Record} scriptContext.newRecord - New record
+         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
+         * @param {Form} scriptContext.form - Current form
+         * @param {ServletRequest} scriptContext.request - HTTP request information sent from the browser for a client action only.
+         * @since 2015.2
+         */
+        const beforeLoad = (scriptContext) =&gt; {
+            var form = scriptContext.form;
+            form.getField({
+                id: 'total',
+            }).updateDisplayType({
+                displayType: serverWidget.FieldDisplayType.HIDDEN,
+            });
+            form.getSublist({
+                id: 'item',
+            }).getField({
+                id: 'rate',
+            }).updateDisplayType({
+                displayType: serverWidget.FieldDisplayType.HIDDEN,
+            });
+        }
+        /**
+         * Defines the function definition that is executed before record is submitted.
+         * @param {Object} scriptContext
+         * @param {Record} scriptContext.newRecord - New record
+         * @param {Record} scriptContext.oldRecord - Old record
+         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
+         * @since 2015.2
+         */
+        const beforeSubmit = (scriptContext) =&gt; {}
+        /**
+         * Defines the function definition that is executed after record is submitted.
+         * @param {Object} scriptContext
+         * @param {Record} scriptContext.newRecord - New record
+         * @param {Record} scriptContext.oldRecord - Old record
+         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
+         * @since 2015.2
+         */
+        const afterSubmit = (scriptContext) =&gt; {}
+        return {
+            beforeLoad,
+            beforeSubmit,
+            afterSubmit
+        }
+    });
+</code></pre>
+<h1 id="recordform">Record和Form对象</h1>
+<p>我在寻求解决方案的过程中，发现了自己的一个错误，把Record和Form对象搞混了。之前自己一直没有意识到，它们其实是两类对象。Record是针对数据的，而Form针对展示的。</p>
+<blockquote>
+<p>You are confusing the record and form objects. <a href="https://system.netsuite.com/app/help/helpcenter.nl?fid=section_4273166777.html">Record.setSublistValue</a> returns a record.Record, which does not have a updateDisplayType method.</p>
+<p>Use scriptContext.form to access the <a href="https://system.netsuite.com/app/help/helpcenter.nl?fid=section_4325835149.html">serverWidget.Form</a>, then<a href="https://system.netsuite.com/app/help/helpcenter.nl?fid=section_4339685468.html"> get</a> the serverWidget.Sublist, then <a href="https://system.netsuite.com/app/help/helpcenter.nl?fid=section_4793350468.html">get</a> the serverWidget.Field. Then you can use <a href="https://system.netsuite.com/app/help/helpcenter.nl?fid=section_4335287288.html">updateDisplayType</a> on the Field.</p>
+</blockquote>
+<h1 id="_2">查询数据字典中不存在的内部标识</h1>
+<p>但是毛额字段依然无法用脚本来隐藏，因为我在数据字典中没有找到它们。毛额的内部标识是<code>grossamt</code>，税额的内部标识是<code>tax1amt</code>。这也从侧面说明了，NetSuite的开发和文档质量，还是有待提高的啊。</p>
+<p>后来请教了研发同事，他们使用代码查询出来的。真是牛啊，我就没有想到这种方法。</p>
+<h1 id="_3">新建时报错</h1>
+<p>在测试时，发现新建时提示错误。</p>
+<blockquote>
+<p>ReferenceError: Empty invocation target! [at Object.beforeLoad (/SuiteScripts/UE_HIDE_FIELDS.js:104:16)]</p>
+</blockquote>
+<p>发现这一行代码与明细行的字段相关，推断在新建时，系统没有生成明细行，也就没有明细行字段，导致无法引用明细行字段。做法也比较简单，就是在函数最开始，添加一行代码，判断一下是事件类型，如果是新建，直接退出即可。</p>
+<pre><code class="language-javascript">if (scriptContext.type == scriptContext.UserEventType.CREATE) {
+    return;
+}
+</code></pre></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../../../.."</script>
+    
+    <script src="../../../../js/base.js"></script>
+    <script src="../../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

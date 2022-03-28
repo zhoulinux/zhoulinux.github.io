@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://example.com/knowledge/netsuite/NetSuite%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AESuiteCloud%20Extension%20for%20Visual%20Studio%20Code/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+    
+    <title>安装插件 - Learn by Solving</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../../css/base.min.css" rel="stylesheet">
+    <link href="../../../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../../../..">Learn by Solving</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../../..">主页</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../belief/belief/">信仰</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../families/families/">家人</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../knowledge/">知识</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../investments/investments/">投资</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#_1">安装插件</a></li>
+        <li class="first-level "><a href="#_2">设置账号</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="_1">安装插件</h1>
+<p>按步骤安装完插件后，系统提示Java版本不匹配。</p>
+<blockquote>
+<p>Your Java version 12.0.1 is not compatible with SuiteCloud Extension for Visual Studio Code. Install Oracle JDK version 11.</p>
+</blockquote>
+<p>我之前是使用Brew安装的Java，不想因为这个就改变了原来的版本，因此打算再安装一个Java11，然后把VSCode的Java路径配置为Java11。</p>
+<p>先安装Java11。</p>
+<pre><code class="language-shell">~ brew install openjdk@11
+</code></pre>
+<p>执行结果如下所示。</p>
+<pre><code class="language-shell">==&gt; Downloading https://ghcr.io/v2/homebrew/core/openjdk/11/manifests/11.0.12
+######################################################################## 100.0%
+==&gt; Downloading https://ghcr.io/v2/homebrew/core/openjdk/11/blobs/sha256:2de8af552742c3caa4d19fa15f6c39c771c20684c0afc0ebaa1e5f9b1
+==&gt; Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:2de8af552742c3caa4d19fa15f6c39c771c20684c0afc
+######################################################################## 100.0%
+==&gt; Pouring openjdk@11--11.0.12.big_sur.bottle.tar.gz
+==&gt; Caveats
+For the system Java wrappers to find this JDK, symlink it with
+  sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+
+openjdk@11 is keg-only, which means it was not symlinked into /usr/local,
+because this is an alternate version of another formula.
+
+If you need to have openjdk@11 first in your PATH, run:
+  echo 'export PATH=&quot;/usr/local/opt/openjdk@11/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
+
+For compilers to find openjdk@11 you may need to set:
+  export CPPFLAGS=&quot;-I/usr/local/opt/openjdk@11/include&quot;
+
+==&gt; Summary
+🍺  /usr/local/Cellar/openjdk@11/11.0.12: 679 files, 297.9MB
+</code></pre>
+<p>根据安装信息，来检验是否成功。</p>
+<pre><code class="language-shell">~ /usr/local/opt/openjdk@11/bin/java --version
+openjdk 11.0.12 2021-07-20
+OpenJDK Runtime Environment Homebrew (build 11.0.12+0)
+OpenJDK 64-Bit Server VM Homebrew (build 11.0.12+0, mixed mode)
+</code></pre>
+<p>我接下来去修改VSCode中的Java配置，但是却无法找到<code>java.home</code>这个配置项，让我非常疑惑。后来在网上搜索的时候，发现可能是没有安装Java相关插件Extension Pack for Java。安装完毕后，我就能够找到这个配置项，并做了修改。</p>
+<pre><code class="language-json">&quot;java.home&quot;: /usr/local/opt/openjdk@11/bin
+&quot;java.home&quot;: /usr/local/opt/openjdk@11
+&quot;java.home&quot;: /usr/local/opt/openjdk@11/libexec/openjdk.jdk
+</code></pre>
+<p>上面几个都不行，均无法在<code>Java Language Server</code>这个选项内找到我安装的Java11。</p>
+<p>重启了几次VSCode之后，我推测可能是系统无法检测到，又回头查看了安装提示信息，发现可能需要建立链接才可以。</p>
+<p>我就按照上面的提示信息建立了链接。</p>
+<pre><code class="language-shell">~ sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+</code></pre>
+<p>做完上述修改后，继续修改了<code>java.home</code>的值。</p>
+<pre><code class="language-json">&quot;java.home&quot;: &quot;/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home&quot;
+</code></pre>
+<p>启动VSCode时，依然提示Java版本为12。但是此时，能够在<code>Java Language Server</code>这个选项内找到我安装的Java11了。</p>
+<p>我推测，可能需要按照提示信息修改环境变量。</p>
+<pre><code class="language-shell">~ echo 'export PATH=&quot;/usr/local/opt/openjdk@11/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
+</code></pre>
+<p>修改完毕后，再打开VSCode的时候，就没有SuiteCloud插件就没有提示Java版本的错误了，而且自动下载了SuiteCloud SDK。之前在执行新建SDF项目的命令时，插件还提示需要下载SuiteCloud SDK。</p>
+<h1 id="_2">设置账号</h1>
+<p>有两种方式，一种是通过浏览器，另一种是直接使用TBA。</p>
+<p>我本来想使用TBA的方式来进行验证，但是没有成功，一直提示错误。死磕之后，我只能尝试通过浏览器来进行验证，很顺利就成功了。结果发现，它的底层也是通过TBA来实现的，不过更便捷。</p>
+<p>这件事情，让我意识到了自己经常犯的一个错误，就是有完美主义倾向。像上面的两种验证方式，我在尝试浏览器验证之后，就可以直接去做脚本开发了。相对来说，脚本开发才是我现阶段最需要掌握的内容。TBA验证的方式，我完全可以先放下来，等到有时间和经验之后，再来解决它。或者，我直接找一名开发同事，帮忙看一下就结束了，不用在哪里死磕而浪费时间。我不用为了证明自己的能力，而一定要解决当前遇到的每个问题。有的时候，只要这个问题不影响主计划的执行，我就可以把它放在一边，而去完成最重要的事情。那点心理上的吹毛求疵，完全可以不用理会。</p>
+<p>这对于我来讲，是一个挑战。好一点的是，昨天晚上意识到之后，我就强迫自己不再关注它，而是把它这个问题记录下来。希望这是一个好的开始，在之后能够做的更好。</p>
+<p>上边提到的，把遇到的问题记录下来，是可以帮助我去除这种完美主义心理的。相当于，我把这个问题从大脑当中暂时清理出来，放在一边，让大脑能够去做更重要的事情。同时，这个问题也不会被我遗忘，而是在时机更恰当的时候进行处理。这样做，能够极大地缓解我的焦虑心理。</p>
+<p><strong>参考资料：</strong></p>
+<p><a href="https://devblogs.microsoft.com/java/about-upgrading-to-java-11-for-vs-code-for-java/">About Upgrading to Java 11 for VS Code for Java</a></p>
+<p><a href="https://linuxtut.com/mac-install-java-in-visual-studio-code-(vs-code)-ef44a/">[Mac] Install Java in Visual Studio Code (VS Code)</a></p></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../../../.."</script>
+    
+    <script src="../../../../js/base.js"></script>
+    <script src="../../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

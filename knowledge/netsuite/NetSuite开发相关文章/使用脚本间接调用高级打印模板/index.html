@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://example.com/knowledge/netsuite/NetSuite%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0/%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E9%97%B4%E6%8E%A5%E8%B0%83%E7%94%A8%E9%AB%98%E7%BA%A7%E6%89%93%E5%8D%B0%E6%A8%A1%E6%9D%BF/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+    
+    <title>使用脚本间接调用高级打印模板 - Learn by Solving</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../../css/base.min.css" rel="stylesheet">
+    <link href="../../../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../../../..">Learn by Solving</a>
+            
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../../..">主页</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../belief/belief/">信仰</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../families/families/">家人</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../knowledge/">知识</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../../investments/investments/">投资</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#_1">调用高级打印模板</a></li>
+        <li class="first-level "><a href="#xml">调用XML模板</a></li>
+        <li class="first-level "><a href="#_2">报错处理</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>在业务单据的表格上选择了高级打印模板后，在用户界面上可以直接打印。</p>
+<p>但是有的时候，我们在打印的时候，却无法在表格上指定高级打印模板，例如发货通知单（FULFILLMENT REQUEST）。或者在打印时，想调用其他没有与当前表格绑定的打印模板。又或者，我们想使用自定义的XML模板来打印。这个时候，可以使用脚本来完成。</p>
+<p>如果想调用的高级打印模板可以绑定到某个表格上，或者可以借助系统标准打印模板进行自定义。可以使用下面的两个脚本。</p>
+<h1 id="_1">调用高级打印模板</h1>
+<p>第一个是USER EVENT脚本，用于在界面上显示打印按键。</p>
+<pre><code class="language-js">/**
+ * Copyright © 2017, Oracle and/or its affiliates. All rights reserved.
+ * 
+ * @NApiVersion 2.x
+ * @NScriptType UserEventScript
+ * @NModuleScope Public
+ */
+define(['N/url', 'N/search'], function(url, search) {
+    /**
+     * Function definition to be triggered before record is loaded.
+     * 
+     * Call advanced pdf/html template directly or through specific form.
+     * 
+     * @param {Object}
+     *            scriptContext
+     * @param {Record}
+     *            scriptContext.newRecord - New record
+     * @param {Record}
+     *            scriptContext.oldRecord - Old record
+     * @param {string}
+     *            scriptContext.type - Trigger type
+     * @Since 2015.2
+     */
+    function beforeLoad(scriptContext) {
+        var newRecord = scriptContext.newRecord;
+        var type = scriptContext.type;
+        var form = scriptContext.form;
+        var printInfo = [{ //Call advanced pdf/html template through specific form.
+            orderType: ['salesorder', 'workorder'],
+            tmpId: ['', ''],
+            buttonLabel: ['打印', '打印'],
+            formId: ['', '']
+        }, { //Call advanced pdf/html template directly.
+            orderType: ['fulfillmentrequest'],
+            tmpId: ['115'],
+            buttonLabel: ['打印'],
+            formId: ['']
+        }];
+        for (var i = 0; i &lt; printInfo.length; i++) {
+            index = printInfo[i].orderType.indexOf(newRecord.type);
+            if (index != -1) {
+                var _url = url.resolveScript({
+                    scriptId: 'customscript_sl_print_template',//Internal ID of suitelet script called.
+                    deploymentId: 'customdeploy_sl_print_template',//Internal ID of suitelet script deployment.
+                    params: {
+                        recId: newRecord.id,
+                        recType: newRecord.type,
+                        tmpId: printInfo[i].tmpId[index],
+                        formId: printInfo[i].formId[index]
+                    }
+                });
+                form.addButton({
+                    id: 'custpage_tn_print' + i,
+                    label: printInfo[i].buttonLabel[index],
+                    functionName: '(function(){ window.open(&quot;' + _url + '&quot;) })'
+                });
+            }
+        }
+    }
+    return {
+        beforeLoad: beforeLoad
+    };
+});
+</code></pre>
+<p>第二个是SUITELET脚本，用于执行打印动作。</p>
+<pre><code class="language-js">/**
+ * @NApiVersion 2.x
+ * @NScriptType Suitelet
+ */
+define(['N/render', 'N/search', 'N/record', 'N/file', 'N/encode'], function(render, search, record, file, encode) {
+    function onRequest(context) {
+        var request = context.request;
+        var parameters = request.parameters;
+        var recId = parameters.recId;
+        var recType = parameters.recType;
+        var tmpId = parameters.tmpId;
+        var formId = parameters.formId;
+        var renderer = render.create();
+        var pdf = '';
+        if (formId) {
+            //writeBackTrasaction(recType, recId, formId);
+            pdf = printTrasaction(renderer, recId, formId);
+        } else {
+            pdf = printRecord(renderer, recId, recType, tmpId);
+        }
+        pdf.name = recType + '_' + recId + '.pdf';
+        context.response.writeFile({
+            file: pdf,
+            isInline: true
+        });
+    }
+
+    function printTrasaction(renderer, recId, formId) {
+        log.debug('recId', recId);
+        log.debug('formId', formId);
+        return render.transaction({
+            entityId: parseInt(recId),
+            printMode: render.PrintMode.PDF,
+            formId: parseInt(formId)
+        });
+    }
+
+    function printRecord(renderer, recId, recType, tmpId) {
+        renderer.setTemplateById(tmpId);
+        renderer.addRecord('record', record.load({
+            type: recType,
+            id: recId
+        }));
+        return renderer.renderAsPdf();
+    }
+
+    function writeBackTrasaction(recType, recId, formId) {
+        var rec = record.load({
+            type: recType,
+            id: recId,
+        });
+        log.debug('recId', recId);
+        if (formId == '107') {
+            rec.setValue({
+                fieldId: 'custbody_tn_productlabelprinted',
+                value: true
+            });
+        } else {
+            rec.setValue({
+                fieldId: 'custbody_tn_printed',
+                value: true
+            });
+            rec.setValue({
+                fieldId: 'custbody_tn_printtime',
+                value: new Date()
+            });
+        }
+        rec.save();
+    }
+    return {
+        onRequest: onRequest
+    };
+});
+</code></pre>
+<h1 id="xml">调用XML模板</h1>
+<p>如果我们自己新建了XML模板，可以使用下面的两个脚本来完成打印。</p>
+<p>第一个脚本是USER EVENT脚本，用于在界面上显示打印按键。</p>
+<pre><code class="language-js">/**
+ *@NApiVersion 2.x
+ *@NScriptType UserEventScript
+ *@NModuleScope SameAccount 
+
+ */
+define([&quot;N/ui/serverWidget&quot;, &quot;N/record&quot;, 'N/format', 'N/search', 'N/url'], function(serverWidget, record, format, search, url) {
+    function beforeLoad(context) {
+        var form = context.form;
+        var newRecord = context.newRecord;
+        var _url = url.resolveScript({
+                    scriptId: 'customscript_print_test',//Internal ID of suitelet script called.
+                    deploymentId: 'customdeploy_print_test',//Internal ID of suitelet script deployment.
+                    params: {
+                        recId: newRecord.id,
+                        recType: newRecord.type
+                    }
+                });
+
+        form.addButton({
+                    id: 'custpage_tn_print' + '_invoice',
+                    label: 'Print Invoice',
+                    functionName: '(function(){ window.open(&quot;' + _url + '&quot;) })'
+                });
+    }
+    return {
+        beforeLoad: beforeLoad
+    };
+});
+</code></pre>
+<p>第二个是SUITELET脚本，用于执行打印动作。</p>
+<pre><code class="language-js">/**
+ * @NApiVersion 2.x
+ * @NScriptType Suitelet
+ */
+// This sample shows how to render search results into a PDF file.
+define(['N/render', 'N/file', 'N/record'], function(render, file, record) {
+    function onRequest(options) {
+        var request = options.request;
+        var response = options.response;
+
+        var parameters = request.parameters;
+        var recId = parameters.recId;
+        var recType = parameters.recType;
+        var xmlTemplateFile = file.load('Templates/PDF Templates/invoicePDFTemplate.xml');
+            var renderer = render.create();
+            renderer.templateContent = xmlTemplateFile.getContents();
+            renderer.addRecord('record', record.load({
+                type: recType,
+                id: recId
+            }));
+
+        //var newfile = renderer.renderAsPdf();
+        //response.writeFile(newfile, false);
+        renderer.renderToResponse(options);
+    }
+
+    return {
+        onRequest: onRequest
+    };
+});
+</code></pre>
+<h1 id="_2">报错处理</h1>
+<p>原本正常的打印脚本，突然报错了，提示如下。</p>
+<pre><code class="language-json">{
+    &quot;type&quot;: &quot;error.SuiteScriptError&quot;,
+    &quot;name&quot;: &quot;UNEXPECTED_ERROR&quot;,
+    &quot;message&quot;: null,
+    &quot;stack&quot;: [&quot;renderAsPdf(N/render)&quot;, &quot;printRecord(/SuiteScripts/sl_print_template.js:44)&quot;, &quot;onRequest(/SuiteScripts/sl_print_template.js:19)&quot;],
+    &quot;cause&quot;: {
+        &quot;type&quot;: &quot;internal error&quot;,
+        &quot;code&quot;: &quot;UNEXPECTED_ERROR&quot;,
+        &quot;details&quot;: null,
+        &quot;userEvent&quot;: null,
+        &quot;stackTrace&quot;: [&quot;renderAsPdf(N/render)&quot;, &quot;printRecord(/SuiteScripts/sl_print_template.js:44)&quot;, &quot;onRequest(/SuiteScripts/sl_print_template.js:19)&quot;],
+        &quot;notifyOff&quot;: false
+    },
+    &quot;id&quot;: &quot;41ce89dd-9a88-42cd-aba3-c1cb2d0af313-2d323032322e30312e3236&quot;,
+    &quot;notifyOff&quot;: false,
+    &quot;userFacing&quot;: false
+}
+</code></pre>
+<p>我刚开始以为是脚本本身有BUG，因此添加了调试语句，也没有发现什么问题。最后，发现我之前录入的测试单据可以正常打印，才推测可能是某些字段为空导致的。</p>
+<p>果不其然，有图片字段为空的，导致高级打印模板无法正常显示图片。有数值字段为空的，导致高级打印模板中的计算出现了问题。这些都是之后需要注意的地方。</p></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../../../.."</script>
+    
+    <script src="../../../../js/base.js"></script>
+    <script src="../../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
